@@ -3,9 +3,6 @@
  * Module dependencies.
  */
 
-var twilioClient = require('./twilio').client;
-console.log(twilioClient);
-
 var express = require('express')
   , engine = require('ejs-locals')
   , routes = require('./routes')
