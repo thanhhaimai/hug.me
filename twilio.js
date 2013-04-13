@@ -19,5 +19,5 @@
     process.env.TWILIO_AUTH_TOKEN
   );
 
-  root.exports = client;
+  root.exports.client = client;
 })(module);
