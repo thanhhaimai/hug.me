@@ -1,0 +1,9 @@
+{
+  "name": "hug.me",
+  "description": "Free hugs for the ones who need it!",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x"
+  }
+}
