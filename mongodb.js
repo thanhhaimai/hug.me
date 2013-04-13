@@ -6,13 +6,27 @@
   var server = new mongodb.Server(
     '127.0.0.1', 27017);
 
-  var client = new mongodb.Db('test', server, {w: 1});
+  var databaseName = 'test';
+  var client = new mongodb.Db(
+    databaseName,
+    server,
+    {w: 1});
 
-  client.open(function(err, p_client) {
-    if (err) {
-      console.log(err);
-    }
-  });
+  var isOpen = false;
 
   root.exports.client = client;
+
+  client.run = function(fn) {
+    if (!isOpen) {
+      client.open(function(err, p_client) {
+        if (err) {
+          console.log(err);
+        }
+
+        fn();
+      });
+    } else {
+      fn();
+    }
+  }
 })(module);
