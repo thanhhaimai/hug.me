@@ -1,28 +1,36 @@
 $(function() {
-  map = new GMaps({
-    div: '#map',
-    lat: -12.043333,
-    lng: -77.028333
+  window.currentLocation = {
+    lat: 37.8717,
+    lng: 122.2728,
+  };
+  GMaps.geolocate({
+    success: function(position) {
+      window.currentLocation = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    },
+    always: function() {
+      console.log('creating map');
+      map = new GMaps({
+        div: '#map',
+        lat: window.currentLocation.lat,
+        lng: window.currentLocation.lng,
+      });
+      map.setCenter(window.currentLocation.lat, window.currentLocation.lng);
+      map.removeMarkers();
+      map.addMarker({
+        lat: window.currentLocation.lat,
+        lng: window.currentLocation.lng,
+      });
+    }
+    
   });
-  Location.currentLocation(function(lat, lng) {
-    window.currentLocation = {
-      lat: lat,
-      lng: lng,
-    };
-    console.log(lat);
-    map.setCenter(lat, lng);
-    map.removeMarkers();
-    map.addMarker({
-      lat: lat,
-      lng: lng,
-    });
-  });
-
 
   $('#form-search-location').submit(function(e){
     e.preventDefault();
     options = {};
-    if (undefined !== window.currentLocation) {
+    if (window.currentLocation !== null) {
         var lat1 = window.currentLocation.lat - 0.5,
             lng1 = window.currentLocation.lng - 0.5,
             lat2 = window.currentLocation.lat + 0.5,
