@@ -10,3 +10,7 @@ exports.login = function(req, res){
 exports.hug = function(req, res){
   res.render('hug');
 };
+
+exports.signup = function (reg, res) {
+  res.render('signup');
+}
