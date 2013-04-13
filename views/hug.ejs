@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Give Me A Hug</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <script src="/js/jquery.min.js" ></script>
+    <script src="/js/underscore-min.js" ></script>
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+    <script src="/js/gmaps.js" ></script>
+    <script src="/js/location.js" ></script>
+    <!-- Le styles -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+      padding-top: 40px;
+      padding-bottom: 40px;
+      background-color: #f5f5f5;
+      }
+
+      .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+      .form-signin .form-signin-heading,
+      .form-signin .checkbox {
+        margin-bottom: 10px;
+      }
+      .form-signin input[type="text"],
+      .form-signin input[type="password"] {
+        font-size: 16px;
+        height: auto;
+        margin-bottom: 15px;
+        padding: 7px 9px;
+      }
+
+ .popin{
+  background:#fff;
+  padding:15px;
+  box-shadow: 0 0 20px #999;
+  border-radius:2px;
+}
+
+#map,
+#panorama {
+  height:300px;
+  background:#6699cc;
+}
+    </style>
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+
+    <script type="text/javascript">
+      $(function() {
+        map = new GMaps({
+          div: '#map',
+          lat: -12.043333,
+          lng: -77.028333
+        });
+        Location.currentLocation(function(lat, lng) {
+          window.currentLocation = {
+            lat: lat,
+            lng: lng,
+          };
+          console.log(lat);
+          map.setCenter(lat, lng);
+          map.removeMarkers();
+          map.addMarker({
+            lat: lat,
+            lng: lng,
+          });
+        });
+
+
+        $('#form-search-location').submit(function(e){
+          e.preventDefault();
+          options = {};
+          if (undefined !== window.currentLocation) {
+              var lat1 = window.currentLocation.lat - 0.5,
+                  lng1 = window.currentLocation.lng - 0.5,
+                  lat2 = window.currentLocation.lat + 0.5,
+                  lng2 = window.currentLocation.lng + 0.5;
+              options.bounds = new google.maps.LatLngBounds(
+                new google.maps.LatLng(lat1, lng1),
+                new google.maps.LatLng(lat2, lng2)
+              );
+          }
+          options.address = $('#address').val().trim();
+          options.callback = function(results, status){
+            if(status=='OK'){
+              var latlng = results[0].geometry.location;
+              window.currentLocation = {
+                lat: latlng.lat(),
+                lng: latlng.lng(),
+              };
+              map.setCenter(latlng.lat(), latlng.lng());
+              map.removeMarkers();
+              map.addMarker({
+                lat: latlng.lat(),
+                lng: latlng.lng()
+              });
+            }
+          };
+          GMaps.geocode(options);
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form id="form-search-location" class="form-inline">
+        <label>Where are you?</label>
+        <input type="text" id="address" name="address">
+        <input type="submit" class="btn" value="Search">
+      </div>
+      <form class="form-hug">
+
+        <div class="popin">
+          <div id="map"></div>
+        </div>
+        <button class="btn btn-large btn-primary" type="submit">Give me a hug!</button>
+      </form>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/bootstrap.min.js"></script>
+
+  </body>
+</html>
