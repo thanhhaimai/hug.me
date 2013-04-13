@@ -7,12 +7,15 @@ var twilioClient = require('./twilio').client;
 console.log(twilioClient);
 
 var express = require('express')
+  , engine = require('ejs-locals')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path');
 
 var app = express();
+
+app.engine('ejs', engine);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
