@@ -3,6 +3,9 @@
  * Module dependencies.
  */
 
+var twilioClient = require('./twilio').client;
+console.log(twilioClient);
+
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
