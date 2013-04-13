@@ -7,6 +7,7 @@ var express = require('express')
   , engine = require('ejs-locals')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , twilioClient = require('./twilio').client
   , http = require('http')
   , path = require('path')
   , passport = require('./passport.js').passport;
