@@ -13,5 +13,6 @@
     "twilio": "1.1.0",
     "mongodb": "1.2.14",
     "backbone": "1.0.0",
+    "ejs-locals": "~1.0.2"
   }
 }
