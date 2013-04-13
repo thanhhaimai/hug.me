@@ -7,13 +7,9 @@
     "start": "node app"
   },
   "dependencies": {
-<<<<<<< Updated upstream
     "express": "3.0.6",
     "ejs": "*",
-    "stylus": "*"
-=======
-    "express": "3.x",
+    "stylus": "*",
     "twilio": "1.1.0"
->>>>>>> Stashed changes
   }
 }
