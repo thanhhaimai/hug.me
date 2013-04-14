@@ -14,7 +14,6 @@
     "mongodb": "1.2.14",
     "backbone": "1.0.0",
     "ejs-locals": "~1.0.2",
-    "passport": "0.1.16",
-    "passport-facebook": "0.1.5"
+    "passport-facebook": "~0.1.5"
   }
 }
