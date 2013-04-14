@@ -1,14 +1,7 @@
 <% layout('layout') -%>
-
-<form id="form-search-location" class="form-inline">
-  <label>Where are you? Be descriptive so the hug-giver can find you :)</label>
-  <input type="text" id="address" name="address">
-  <input type="submit" class="btn" value="Search">
-  <input type="button" id="btn-locate-user" class="btn" value="Locate me!">
-</div>
-<form class="form-hug">
-  <div class="popin">
-    <div id="map"></div>
-  </div>
-  <input id="submit-hug" class="btn btn-large btn-primary" type="button" value="Give me a hug!" />
-</form>
+<% block('picture', ' \
+<h1 class="brand" style="padding-left:40px;"> \
+<div class="circular" style="background: url(http://avatars.io/facebook/thanhhaimai?size=medium) no-repeat; \
+float:left;"></div> <a style="float:right; padding-left: 5px; padding-top:5px;"> &nbsp; Than Hai  requested a hug at 3:52pm </p> \
+</h1> \
+') -%>
