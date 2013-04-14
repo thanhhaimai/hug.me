@@ -18,3 +18,7 @@ exports.hug = function(req, res){
 exports.signup = function (reg, res) {
   res.render('signup');
 };
+
+exports.hug_update = function(req, res){
+  console.log(req.body);
+}

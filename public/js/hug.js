@@ -1,4 +1,22 @@
 $(function() {
+
+
+  // initialize pnotify
+  $.pnotify.defaults.history = false;
+
+  function error(message) {
+    $.pnotify_remove_all();
+    var stack_bar_top = {"dir1": "down", "dir2": "right", "push": "top", "spacing1": 0, "spacing2": 0};
+    var opts = {
+        title: "Oops",
+        text: message,
+        addclass: "stack-bar-top",
+        cornerclass: "",
+        width: "100%",
+        stack: stack_bar_top,
+    };
+    $.pnotify(opts);
+  }
   window.loc = {
     lat: 37.8717,
     lng: 122.2728,
@@ -78,7 +96,21 @@ $(function() {
   // update current location to the server and set user status
   // to accept hug
   $("#submit-hug").click(function() {
-
+    lat = window.locationMarker.position.lat();
+    lng = window.locationMarker.position.lng();
+    address = $("#address").val().trim();
+    if (address.length == 0) {
+      error("You need to enter a descriptive address so that the hug-giver can find you.");
+      return;
+    }
+    data = {
+      lat: lat,
+      lng: lng,
+      address: address,
+    };
+    $.post('/hug', data, function(){
+      console.log('sent');
+    });
 
   });
 
