@@ -13,13 +13,7 @@
 // client.run(function() {
 //   mongoClient.collection('user', function(err, collection) {
 //     collection.insert(user.toJSON(), function(err) {
-//       if (err) {
-//         console.log(err);
-//       }
 //       collection.find().toArray(function(err, results) {
-//         if (err) {
-//           console.log(err);
-//         }
 //         console.log(results);
 //       });
 //     });
@@ -32,13 +26,6 @@ if (isServer) {
 }
 
 (function(root) {
-
-  var required = function(parameter) {
-    if (parameter === undefined) {
-      throw 'Required param not supplied';
-    }
-  }
-
   root.Model = root.Model || {};
 
   root.Model.User = Backbone.Model.extend({
