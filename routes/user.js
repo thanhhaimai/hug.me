@@ -3,6 +3,7 @@
  * GET users listing.
  */
 
+var util = require('../util.js');
 var User = require('../models/user').Model.User;
 var Users = require('../models/user').Collection.Users;
 var mongoClient = require('../mongodb').client;
@@ -30,5 +31,18 @@ exports.authFb = function(req, res) {
 };
 
 exports.authFbCallback = function(req, res) {
+  console.log(req.user);
   res.redirect('/hug');
+};
+
+exports.users = function(req, res) {
+  mongoClient.run(function() {
+    mongoClient.collection('user', function(err, collection) {
+      util.dieOnError(err);
+      collection.find().toArray(function(err, result) {
+        util.dieOnError(err);
+        res.send(result);
+      });
+    });
+  });
 };

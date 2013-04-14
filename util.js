@@ -5,7 +5,7 @@
     }
   };
 
-  root.dieOnErr = function(err) {
+  root.dieOnError = function(err) {
     if (err) {
       throw err;
     }

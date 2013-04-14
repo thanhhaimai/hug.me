@@ -38,16 +38,17 @@ app.configure('development', function(){
 });
 
 app.get('/',
-    routes.index);
+        routes.index);
 app.get('/hug',
-    ensureAuthenticated,
-    user.hug);
+        ensureAuthenticated,
+        user.hug);
 app.get('/auth/facebook',
-    passport.authenticate('facebook'),
-    user.authFb);
+        passport.authenticate('facebook'),
+        user.authFb);
 app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', { failureRedirect: '/' }),
-    user.authFbCallback);
+        passport.authenticate('facebook', { failureRedirect: '/' }),
+        user.authFbCallback);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

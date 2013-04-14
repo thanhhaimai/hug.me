@@ -1,6 +1,8 @@
 // Module to handle monbodb client
 // see https://github.com/mongodb/node-mongodb-native
 
+var util = require('./util.js');
+
 (function(root){
   var mongodb = require('mongodb');
   var server = new mongodb.Server(
@@ -19,10 +21,7 @@
   client.run = function(fn) {
     if (!isOpen) {
       client.open(function(err, p_client) {
-        if (err) {
-          console.log(err);
-        }
-
+        util.dieOnError(err);
         fn();
       });
     } else {
