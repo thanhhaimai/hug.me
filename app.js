@@ -8,7 +8,8 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , passport = require('./passport.js').passport;
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
+  app.use(passport.initialize());
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
@@ -36,8 +38,27 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/login', user.login);
 app.get('/hug', user.hug);
-app.get('/signup', user.signup);
+app.get('/logout', user.logout);
+app.get('/account',
+        ensureAuthenticated,
+        user.account);
+app.get('/auth/facebook',
+        passport.authenticate('facebook'),
+        user.authFb);
+app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', { failureRedirect: '/login' }),
+        user.authFbCallback);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  res.redirect('/login')
+}
