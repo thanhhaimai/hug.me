@@ -2974,6 +2974,7 @@ table [class*=span],
      -moz-transition: opacity 0.15s linear;
        -o-transition: opacity 0.15s linear;
           transition: opacity 0.15s linear;
+          z-index:3000;
 }
 
 .fade.in {
