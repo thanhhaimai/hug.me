@@ -1,3 +1,4 @@
+var twilioClient = require('../twilio.js').client;
 var util = require('../util.js');
 var mongoClient = require('../mongodb').client;
 
@@ -19,7 +20,14 @@ exports.requestHug = function(req, res) {
     status: 'awaiting'
   }, function(err, result) {
     util.dieOnError(err);
-    res.send("A hug is on its way");
+    twilioClient.sendSms({
+      to: '+17144175062',
+      from: '+19492163884',
+      body: 'Yo! hug this person http://www.facebook.com/thanhhaimai'
+    }, function(err, responseData) {
+      util.dieOnError(err);
+      res.send("A hug is on its way");
+    });
   });
 };
 
