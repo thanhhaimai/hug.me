@@ -16,3 +16,4 @@ npm-debug.log
 node_modules
 public/stylesheets/style.css
 .DS_Store
+run.sh
