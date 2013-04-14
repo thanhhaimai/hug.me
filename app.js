@@ -27,6 +27,7 @@ app.configure(function(){
   app.use(express.cookieParser('your secret here'));
   app.use(express.session());
   app.use(passport.initialize());
+  app.use(passport.session());
   app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
@@ -36,19 +37,17 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/login', user.login);
-app.get('/hug', user.hug);
-app.get('/logout', user.logout);
-app.get('/account',
-        ensureAuthenticated,
-        user.account);
+app.get('/',
+    routes.index);
+app.get('/hug',
+    ensureAuthenticated,
+    user.hug);
 app.get('/auth/facebook',
-        passport.authenticate('facebook'),
-        user.authFb);
+    passport.authenticate('facebook'),
+    user.authFb);
 app.get('/auth/facebook/callback',
-        passport.authenticate('facebook', { failureRedirect: '/login' }),
-        user.authFbCallback);
+    passport.authenticate('facebook', { failureRedirect: '/' }),
+    user.authFbCallback);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
@@ -61,5 +60,5 @@ http.createServer(app).listen(app.get('port'), function(){
 //   login page.
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  res.redirect('/login')
+  res.redirect('/')
 }

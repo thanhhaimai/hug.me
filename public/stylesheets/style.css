@@ -9,8 +9,8 @@ a {
   color: #00b7ff;
 }
 .form-signin {
-  max-width: 300px;
-  padding: 19px 29px 29px;
+  max-width: 400px;
+  padding: 20px;
   margin: 0 auto 20px;
   background-color: #fff;
   border: 1px solid #e5e5e5;
@@ -23,7 +23,7 @@ a {
 }
 .form-signin .form-signin-heading,
 .form-signin .checkbox {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .form-signin input[type="text"],
 .form-signin input[type="password"] {
@@ -50,4 +50,7 @@ a {
 #map img {
   max-height: none;
   max-width: none;
+}
+.wrapper {
+  text-align: center;
 }
