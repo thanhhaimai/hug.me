@@ -1,3 +1,4 @@
+var util = require('../util.js');
 var mongoClient = require('../mongodb').client;
 
 exports.hug = function(req, res){
@@ -14,6 +15,7 @@ exports.hugs = function(req, res) {
 exports.requestHug = function(req, res) {
   mongoClient.userCollection.insert({
     fbid: req.user.fbid,
+    phoneNumber: req.data.phoneNumber,
     status: 'awaiting'
   }, function(err, result) {
     util.dieOnError(err);
