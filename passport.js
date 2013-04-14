@@ -1,5 +1,7 @@
 // Module for facebook app
+var util = require('./util.js');
 var passport = require('passport');
+var mongoClient = require('./mongodb').client;
 
 var FacebookStrategy = require('passport-facebook').Strategy;
 
@@ -36,7 +38,25 @@ passport.use(new FacebookStrategy({
     // represent the logged-in user.  In a typical application, you would want
     // to associate the Facebook account with a user record in your database,
     // and return that user instead.
-    return done(null, profile);
+    mongoClient.run(function() {
+      mongoClient.collection('user', function(err, collection) {
+        util.dieOnError(err);
+
+        collection.findOne({fbid: profile.id}, function(err, result) {
+          util.dieOnError(err);
+          if (result) {
+            done(null, result);
+          } else {
+            collection.insert({
+              fbid: profile.id
+            }, function(err, result) {
+              util.dieOnError(err);
+              done(null, result);
+            });
+          }
+        });
+      });
+    });
   });
 }));
 

@@ -31,7 +31,6 @@ exports.authFb = function(req, res) {
 };
 
 exports.authFbCallback = function(req, res) {
-  console.log(req.user);
   res.redirect('/hug');
 };
 

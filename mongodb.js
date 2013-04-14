@@ -14,18 +14,10 @@ var util = require('./util.js');
     server,
     {w: 1});
 
-  var isOpen = false;
-
   root.exports.client = client;
+  client.open(function() {});
 
   client.run = function(fn) {
-    if (!isOpen) {
-      client.open(function(err, p_client) {
-        util.dieOnError(err);
-        fn();
-      });
-    } else {
-      fn();
-    }
+    fn();
   }
 })(module);

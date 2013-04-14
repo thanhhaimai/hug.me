@@ -48,6 +48,8 @@ app.get('/auth/facebook',
 app.get('/auth/facebook/callback',
         passport.authenticate('facebook', { failureRedirect: '/' }),
         user.authFbCallback);
+app.get('/users',
+        user.users);
 
 
 http.createServer(app).listen(app.get('port'), function(){
