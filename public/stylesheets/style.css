@@ -43,3 +43,11 @@ a {
   height: 300px;
   background: #69c;
 }
+#map label {
+  width: auto;
+  display: inline;
+}
+#map img {
+  max-height: none;
+  max-width: none;
+}
