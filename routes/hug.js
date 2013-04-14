@@ -15,16 +15,16 @@ exports.hugs = function(req, res) {
 exports.requestHug = function(req, res) {
   mongoClient.userCollection.insert({
     fbid: req.user.fbid,
-    phoneNumber: req.data.phoneNumber,
+    phoneNumber: req.body.phoneNumber,
     status: 'awaiting'
   }, function(err, result) {
     util.dieOnError(err);
-    done(null, result);
+    res.send("A hug is on its way");
   });
 };
 
 exports.acceptHug = function(req, res) {
-  var fbid = req.data.fbid;
+  var fbid = req.body.fbid;
   mongoClient.userCollection.findOne({
     fbid: fbid
   }, function(err, result) {
