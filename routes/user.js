@@ -8,10 +8,6 @@ var User = require('../models/user').Model.User;
 var Users = require('../models/user').Collection.Users;
 var mongoClient = require('../mongodb').client;
 
-exports.hug = function(req, res){
-  res.render('hug');
-};
-
 exports.account = function(req, res){
   res.render('account', { user: req.user });
 };
@@ -35,13 +31,8 @@ exports.authFbCallback = function(req, res) {
 };
 
 exports.users = function(req, res) {
-  mongoClient.run(function() {
-    mongoClient.collection('user', function(err, collection) {
-      util.dieOnError(err);
-      collection.find().toArray(function(err, result) {
-        util.dieOnError(err);
-        res.send(result);
-      });
-    });
+  mongoClient.userCollection.find().toArray(function(err, result) {
+    util.dieOnError(err);
+    res.send(result);
   });
 };

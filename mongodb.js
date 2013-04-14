@@ -14,10 +14,16 @@ var util = require('./util.js');
     server,
     {w: 1});
 
-  root.exports.client = client;
-  client.open(function() {});
+  root.client = client;
+  client.open(function() {
+    client.collection('user', function(err, collection) {
+      util.dieOnError(err);
+      client.userCollection = collection;
+    });
 
-  client.run = function(fn) {
-    fn();
-  }
-})(module);
+    client.collection('hugRequest', function(err, collection) {
+      util.dieOnError(err);
+      client.hugRequestCollection = collection;
+    });
+  });
+})(module.exports);

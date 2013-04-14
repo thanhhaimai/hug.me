@@ -7,6 +7,7 @@ var express = require('express')
   , engine = require('ejs-locals')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , hug = require('./routes/hug')
   , twilioClient = require('./twilio').client
   , http = require('http')
   , path = require('path')
@@ -41,7 +42,7 @@ app.get('/',
         routes.index);
 app.get('/hug',
         ensureAuthenticated,
-        user.hug);
+        hug.hug);
 app.get('/auth/facebook',
         passport.authenticate('facebook'),
         user.authFb);
@@ -50,7 +51,12 @@ app.get('/auth/facebook/callback',
         user.authFbCallback);
 app.get('/users',
         user.users);
-
+app.get('/hugs',
+        hug.hugs);
+app.post('/requestHug',
+         hug.requestHug);
+app.post('/acceptHug',
+         hug.acceptHug);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));

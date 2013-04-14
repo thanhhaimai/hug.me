@@ -38,24 +38,18 @@ passport.use(new FacebookStrategy({
     // represent the logged-in user.  In a typical application, you would want
     // to associate the Facebook account with a user record in your database,
     // and return that user instead.
-    mongoClient.run(function() {
-      mongoClient.collection('user', function(err, collection) {
-        util.dieOnError(err);
-
-        collection.findOne({fbid: profile.id}, function(err, result) {
+    mongoClient.userCollection.findOne({fbid: profile.id}, function(err, result) {
+      util.dieOnError(err);
+      if (result) {
+        done(null, result);
+      } else {
+        userCollection.insert({
+          fbid: profile.id
+        }, function(err, result) {
           util.dieOnError(err);
-          if (result) {
-            done(null, result);
-          } else {
-            collection.insert({
-              fbid: profile.id
-            }, function(err, result) {
-              util.dieOnError(err);
-              done(null, result);
-            });
-          }
+          done(null, result);
         });
-      });
+      }
     });
   });
 }));
