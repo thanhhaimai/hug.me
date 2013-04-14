@@ -13,4 +13,4 @@ exports.login = function(req, res){
 
 exports.signup = function (reg, res) {
   res.render('signup');
-}
+};
