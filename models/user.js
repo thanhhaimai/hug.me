@@ -22,7 +22,7 @@
 
 var isServer = module && module.exports;
 if (isServer) {
-  var Backbone = require('Backbone');
+  var Backbone = require('../public/js/backbone.js');
 }
 
 (function(root) {
